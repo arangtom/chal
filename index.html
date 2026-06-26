@@ -47,10 +47,12 @@
             flex-direction: column;
         }
         
+        /* 기본 진입 시 혹은 #page-home 일 때 홈 출력 */
         #page-home, .page:target {
             display: none;
         }
         
+        /* 현재 타겟팅된 페이지 및 초기 기본 홈 페이지 노출 조건 설정 */
         body:not(:has(:target)) #page-home,
         #page-home:target,
         #page-login:target,
@@ -116,15 +118,15 @@
         /* --- Common Page Content Padding --- */
         .content-body {
             flex: 1;
-            padding: 40px 8%;
+            padding: 60px 8%;
         }
 
         /* ==========================================================================
-           🏠 페이지 1 — 홈 (랜딩)
+           📄 홈 페이지 스태일 (image_761e3c.png)
            ========================================================================== */
         .hero-section {
             background-color: var(--color-bg-dark);
-            color: var(--white);
+            color: var(--color-white);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -152,7 +154,6 @@
             font-size: 42px;
             font-weight: 700;
             line-height: 1.4;
-            color: var(--color-white);
         }
         .hero-content p {
             font-size: 18px;
@@ -184,9 +185,7 @@
             justify-content: space-between;
             gap: 30px;
         }
-        
-        /* [핵심 수정] div와 a 태그 형태의 카드 모두 동일하게 적용되도록 선택자 지정 */
-        .feature-card, a.feature-card {
+        .feature-card {
             background-color: var(--color-white);
             flex: 1;
             padding: 40px 30px;
@@ -197,9 +196,6 @@
             flex-direction: column;
             gap: 16px;
             height: 220px;
-            transition: transform 0.2s, box-shadow 0.2s;
-            text-decoration: none;
-            color: inherit;
         }
         .feature-card h3 {
             font-size: 20px;
@@ -211,17 +207,9 @@
             color: #888888;
             line-height: 1.5;
         }
-        
-        /* 홈 화면 내 사진 업로드 카드 특수 피드백 */
-        .features-grid a.feature-card:hover {
-            cursor: pointer;
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(138, 109, 77, 0.15);
-            border: 1px solid var(--color-primary);
-        }
 
         /* ==========================================================================
-           🔐 로그인 & 📝 회원가입 공통 2단 레이아웃
+           🔐 로그인 & 📝 회원가입 공통 2단 레이아웃 (image_7621f6.png / image_762215.png)
            ========================================================================== */
         .auth-container {
             display: flex;
@@ -324,279 +312,139 @@
         }
 
         /* ==========================================================================
-           🤖 페이지 4 — AI 도면 가구 배치 스타일 (조감도 내부 요소)
+           🤖 AI 가구 추천 페이지 스타일 (image_7624c1.png)
            ========================================================================== */
-        .ai-title-area {
-            margin-bottom: 24px;
+        .ai-layout {
+            display: flex;
+            gap: 5%;
         }
-        .ai-title-area h2 {
+        .ai-left {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        .ai-left h2, .ai-right h2 {
             font-size: 28px;
             font-weight: 700;
             color: #000000;
-            margin-bottom: 6px;
-        }
-        .ai-title-area p {
-            color: var(--color-gray);
-            font-size: 14px;
-        }
-        
-        .ai-blueprint-layout {
-            display: flex;
-            gap: 24px;
-            align-items: flex-start;
-        }
-        
-        .blueprint-container {
-            flex: 1.1;
-            background-color: var(--color-white);
-            border-radius: 12px;
-            padding: 24px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
-        }
-        .panel-header {
-            background-color: var(--color-bg-dark);
-            color: var(--color-white);
-            padding: 14px 20px;
-            font-size: 15px;
-            font-weight: 600;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 16px;
-        }
-        .room-filters {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 16px;
-        }
-        .room-btn {
-            background-color: #ede7dc;
-            padding: 10px 24px;
-            border-radius: 6px;
-            font-size: 14px;
-            color: #444;
-            cursor: pointer;
-        }
-        .room-btn.active {
-            background-color: var(--color-primary);
-            color: var(--color-white);
-        }
-        
-        .blueprint-canvas {
-            border: 1px solid var(--color-border);
-            border-radius: 8px;
-            height: 520px;
-            position: relative;
-            background-color: #faf8f5;
-            padding: 20px;
-        }
-        .ai-badge-fixed {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background-color: #a3896b;
-            color: white;
-            font-size: 12px;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-weight: 600;
-        }
-        
-        .wall {
-            position: absolute;
-            background-color: #3b3228;
-        }
-        .w-outer-1 { top: 40px; left: 40px; width: 360px; height: 10px; }
-        .w-outer-2 { top: 40px; left: 40px; width: 10px; height: 440px; }
-        .w-outer-3 { top: 470px; left: 40px; width: 360px; height: 10px; }
-        .w-outer-4 { top: 40px; left: 390px; width: 10px; height: 440px; }
-        .w-inner-h1 { top: 190px; left: 40px; width: 130px; height: 8px; }
-        .w-inner-h2 { top: 250px; left: 160px; width: 240px; height: 8px; }
-        .w-inner-v1 { top: 40px; left: 160px; width: 8px; height: 300px; }
-        
-        .furniture-element {
-            position: absolute;
-            background-color: #c4ab8e;
-            border: 1px solid #b2977a;
-            border-radius: 4px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            color: #554433;
-            padding: 4px;
-            font-weight: 600;
-        }
-        .f-tv { top: 60px; left: 60px; width: 80px; height: 24px; background-color: #8c7863; color: white; }
-        .f-sofa { top: 110px; left: 60px; width: 80px; height: 45px; }
-        .f-table1 { top: 165px; left: 85px; width: 35px; height: 20px; }
-        .f-kitchen { top: 205px; left: 70px; width: 70px; height: 24px; }
-        .f-dining { top: 255px; left: 75px; width: 50px; height: 40px; }
-        .f-bed { top: 65px; left: 185px; width: 60px; height: 50px; }
-        .f-closet { top: 60px; left: 265px; width: 40px; height: 65px; background-color: #7d6854; color: white; }
-        
-        .room-label {
-            position: absolute;
-            font-size: 12px;
-            font-weight: 700;
-            color: #888;
-        }
-        .rl-living { top: 55px; left: 145px; }
-        .rl-kitchen { top: 230px; left: 45px; }
-        
-        .ai-control-side {
-            flex: 0.9;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        .side-panel {
-            background-color: var(--color-white);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
-        }
-        .recommend-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            max-height: 290px;
-            overflow-y: auto;
-            padding-right: 4px;
-        }
-        .recommend-item {
-            display: flex;
-            align-items: center;
-            background-color: #fbf9f5;
-            border: 1px solid var(--color-border);
-            border-radius: 8px;
-            padding: 10px 14px;
-            justify-content: space-between;
-        }
-        .item-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .item-icon {
-            font-size: 20px;
-            background-color: #ede7dc;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 6px;
-        }
-        .item-meta h5 {
-            font-size: 14px;
-            font-weight: 700;
-            color: #111;
-        }
-        .item-meta span {
-            font-size: 11px;
-            color: var(--color-gray);
-        }
-        .item-right {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .tag-status {
-            font-size: 11px;
-            background-color: #f3edd8;
-            color: #a47e3c;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-weight: 600;
-        }
-        .btn-placed {
-            background-color: #2e7d32;
-            color: white;
-            font-size: 12px;
-            padding: 6px 12px;
-            border-radius: 4px;
-            font-weight: 600;
-        }
-        .btn-side-buy {
-            background-color: var(--color-primary);
-            color: white;
-            font-size: 12px;
-            padding: 6px 12px;
-            border-radius: 4px;
-        }
-        
-        .opt-group {
-            margin-top: 14px;
-        }
-        .opt-title {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--color-gray);
             margin-bottom: 8px;
         }
-        .opt-tags {
+        .ai-left p {
+            color: var(--color-gray);
+            font-size: 15px;
+            margin-bottom: 24px;
+        }
+        .upload-box {
+            background-color: var(--color-white);
+            border: 2px dashed #d1c9bc;
+            border-radius: 12px;
+            height: 340px;
             display: flex;
-            gap: 8px;
-            margin-bottom: 14px;
-            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            text-align: center;
+            color: #888888;
+            font-size: 14px;
+            line-height: 1.6;
         }
-        .opt-tag-btn {
-            background-color: #ede7dc;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 13px;
-            color: #333;
-            cursor: pointer;
-        }
-        .opt-tag-btn.active {
+        .btn-upload {
             background-color: var(--color-primary);
-            color: white;
-        }
-        
-        .side-action-buttons {
-            display: flex;
-            gap: 12px;
+            color: var(--color-white);
+            padding: 14px 28px;
+            border-radius: 6px;
+            font-weight: 600;
             margin-top: 10px;
         }
-        .btn-re-layout {
-            flex: 1;
-            background-color: var(--color-bg-dark);
-            color: white;
-            padding: 14px;
-            border-radius: 6px;
-            font-weight: 600;
-            text-align: center;
+        .style-tags-container h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .tag-group {
+            display: flex;
+            gap: 12px;
+        }
+        .tag {
+            background-color: var(--color-white);
+            border: 1px solid var(--color-border);
+            padding: 12px 28px;
+            border-radius: 20px;
             font-size: 14px;
         }
-        .btn-buy-all {
-            flex: 1.2;
+        .tag.active {
             background-color: var(--color-primary);
-            color: white;
-            padding: 14px;
-            border-radius: 6px;
-            font-weight: 600;
-            text-align: center;
-            font-size: 14px;
+            color: var(--color-white);
+            border-color: var(--color-primary);
         }
-        .price-summary-bar {
+        .ai-right {
+            flex: 1.4;
+        }
+        .ai-result-grid {
+            background-color: var(--color-white);
+            border-radius: 16px;
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        .result-card {
+            background-color: #f2ede2;
+            border-radius: 8px;
+            padding: 16px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+        .card-img-holder {
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+        .card-info {
+            background-color: #fbf9f4;
+            padding: 16px;
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .card-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #000000;
+        }
+        .card-bottom {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 16px;
-            padding-top: 16px;
-            border-top: 1px dashed var(--color-border);
         }
-        .price-summary-bar .lbl {
-            font-size: 13px;
-            color: var(--color-gray);
+        .card-price {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--color-primary);
         }
-        .price-summary-bar .total-price {
-            font-size: 20px;
-            font-weight: 800;
-            color: #111;
+        .btn-buy {
+            background-color: var(--color-primary-dark);
+            color: var(--color-white);
+            font-size: 12px;
+            padding: 8px 16px;
+            border-radius: 4px;
         }
         .btn-more {
             display: block;
@@ -611,7 +459,7 @@
         }
 
         /* ==========================================================================
-           🛒 쇼핑몰 페이지 스타일
+           🛒 쇼핑몰 페이지 스타일 (image_7624e1.png)
            ========================================================================== */
         .shop-header {
             margin-bottom: 30px;
@@ -677,42 +525,11 @@
             background-color: #e5dfd3;
             border-radius: 8px;
             margin-bottom: 12px;
-            height: 140px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
         }
         .shop-card .card-info {
             background-color: transparent;
             padding: 4px;
             position: relative;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .card-title {
-            font-size: 15px;
-            font-weight: 700;
-            color: #000000;
-        }
-        .card-bottom {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 12px;
-        }
-        .card-price {
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--color-primary);
-        }
-        .btn-buy {
-            background-color: var(--color-primary-dark);
-            color: var(--color-white);
-            font-size: 12px;
-            padding: 8px 16px;
-            border-radius: 4px;
         }
         .btn-wish {
             position: absolute;
@@ -720,7 +537,9 @@
             top: 4px;
             font-size: 18px;
             color: var(--color-gray);
-            cursor: pointer;
+        }
+        .shop-card .card-bottom {
+            margin-top: 12px;
         }
 
         /* --- Footer --- */
@@ -738,7 +557,7 @@
 
     <!-- ==========================================================================
        🏠 페이지 1 — 홈 (랜딩) [#page-home]
-       ========================================================================== */
+       ========================================================================== -->
     <div id="page-home" class="page">
         <header class="header">
             <a href="#page-home" class="logo">sol-ving</a>
@@ -765,17 +584,14 @@
         <div class="features-section">
             <h2 class="section-title">주요 기능</h2>
             <div class="features-grid">
-                <!-- 📸 사진 업로드 카드를 클릭하면 #page-ai 페이지로 라우팅 연동 -->
-                <a href="#page-ai" class="feature-card">
+                <div class="feature-card">
                     <h3>📸 사진 업로드</h3>
                     <p>빈 공간이나 방을 사진으로 찍어서 올려요</p>
-                </a>
-                
+                </div>
                 <div class="feature-card">
                     <h3>🤖 AI 분석</h3>
                     <p>AI가 공간을 분석하고 스타일을 파악해요</p>
                 </div>
-                
                 <div class="feature-card">
                     <h3>🛋️ 가구 추천</h3>
                     <p>딱 맞는 가구를 바로 추천해드려요</p>
@@ -788,7 +604,7 @@
 
     <!-- ==========================================================================
        🔐 페이지 2 — 로그인 [#page-login]
-       ========================================================================== */
+       ========================================================================== -->
     <div id="page-login" class="page">
         <div class="auth-container">
             <div class="auth-left">
@@ -824,7 +640,7 @@
 
     <!-- ==========================================================================
        📝 페이지 3 — 회원가입 [#page-register]
-       ========================================================================== */
+       ========================================================================== -->
     <div id="page-register" class="page">
         <div class="auth-container">
             <div class="auth-left">
@@ -866,8 +682,8 @@
 
 
     <!-- ==========================================================================
-       🤖 페이지 4 — AI 도면 가구 배치 페이지 [#page-ai]
-       ========================================================================== */
+       🤖 페이지 4 — AI 가구 추천 [#page-ai]
+       ========================================================================== -->
     <div id="page-ai" class="page">
         <header class="header">
             <a href="#page-home" class="logo">sol-ving</a>
@@ -883,152 +699,64 @@
         </header>
         
         <div class="content-body">
-            <div class="ai-title-area">
-                <h2>AI 도면 가구 배치</h2>
-                <p>방 유형을 선택하고 AI가 추천한 가구를 도면에 배치해보세요</p>
-            </div>
-            
-            <div class="ai-blueprint-layout">
-                <div class="blueprint-container">
-                    <div class="panel-header">
-                        🏠 아파트 평면도 — 거실·주방·침실·욕실
+            <div class="ai-layout">
+                <div class="ai-left">
+                    <div>
+                        <h2>AI 가구 추천</h2>
+                        <p>공간 사진을 올리면 AI가 맞는 가구를 추천해드려요</p>
                     </div>
-                    <div class="room-filters">
-                        <button class="room-btn">거실</button>
-                        <button class="room-btn">침실</button>
-                        <button class="room-btn">주방</button>
-                        <button class="room-btn">욕실</button>
-                        <button class="room-btn active">전체</button>
+                    <div class="upload-box">
+                        <span>📷</span>
+                        <p>여기에 사진을 끌어다 놓거나<br>클릭해서 업로드하세요</p>
+                        <button class="btn-upload">사진 선택하기</button>
                     </div>
-                    
-                    <div class="blueprint-canvas">
-                        <div class="ai-badge-fixed">✨ AI 배치 완료</div>
-                        
-                        <div class="wall w-outer-1"></div>
-                        <div class="wall w-outer-2"></div>
-                        <div class="wall w-outer-3"></div>
-                        <div class="wall w-outer-4"></div>
-                        <div class="wall w-inner-h1"></div>
-                        <div class="wall w-inner-h2"></div>
-                        <div class="wall w-inner-v1"></div>
-                        
-                        <div class="room-label rl-living">거실</div>
-                        <div class="room-label rl-kitchen" style="top: 235px; left: 55px;">주방</div>
-                        <div class="room-label" style="top: 135px; left: 185px;">침실</div>
-                        <div class="room-label" style="top: 300px; left: 220px;">다용도실</div>
-                        
-                        <div class="furniture-element f-tv">📺 TV</div>
-                        <div class="furniture-element f-sofa">🛋️ 소파</div>
-                        <div class="furniture-element f-table1">테이블</div>
-                        <div class="furniture-element f-kitchen">조리대</div>
-                        <div class="furniture-element f-dining">🍽️ 식탁</div>
-                        <div class="furniture-element f-bed">🛏️ 침대</div>
-                        <div class="furniture-element f-closet">옷장</div>
-                        <div class="furniture-element" style="top: 275px; left: 335px; width: 35px; height: 35px; background-color: #bcd4e6;">욕조</div>
+                    <div class="style-tags-container">
+                        <h4>원하는 스타일을 선택하세요</h4>
+                        <div class="tag-group">
+                            <button class="tag active">모던</button>
+                            <button class="tag">북유럽</button>
+                            <button class="tag">빈티지</button>
+                            <button class="tag">내추럴</button>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="ai-control-side">
-                    <div class="side-panel">
-                        <div class="panel-header" style="margin:-20px -20px 16px -20px; border-radius:12px 12px 0 0;">
-                            📥 AI 추천 가구 목록
+                <div class="ai-right">
+                    <h2>AI 추천 결과</h2>
+                    <div class="ai-result-grid">
+                        <div class="result-card">
+                            <span class="badge">거실 추천</span>
+                            <div class="card-img-holder">🛋️</div>
+                            <div class="card-info">
+                                <div class="card-title">스칸디나비안 소파</div>
+                                <div class="card-bottom"><span class="card-price">₩ 320,000</span><button class="btn-buy">구매하기</button></div>
+                            </div>
                         </div>
-                        <div class="recommend-list">
-                            <div class="recommend-item">
-                                <div class="item-left">
-                                    <div class="item-icon">🛋️</div>
-                                    <div class="item-meta">
-                                        <h5>스칸디나비안 소파</h5>
-                                        <span>거실 • ₩ 320,000</span>
-                                    </div>
-                                </div>
-                                <div class="item-right">
-                                    <span class="tag-status">거실 추천</span>
-                                    <span class="btn-placed">✓ 배치됨</span>
-                                    <button class="btn-side-buy">구매</button>
-                                </div>
+                        <div class="result-card">
+                            <span class="badge">인기 상품</span>
+                            <div class="card-img-holder">🪑</div>
+                            <div class="card-info">
+                                <div class="card-title">오크 원목 테이블</div>
+                                <div class="card-bottom"><span class="card-price">₩ 185,000</span><button class="btn-buy">구매하기</button></div>
                             </div>
-                            <div class="recommend-item">
-                                <div class="item-left">
-                                    <div class="item-icon">📺</div>
-                                    <div class="item-meta">
-                                        <h5>월넛 TV 장</h5>
-                                        <span>거실 • ₩ 185,000</span>
-                                    </div>
-                                </div>
-                                <div class="item-right">
-                                    <span class="tag-status">잘 어울림</span>
-                                    <span class="btn-placed">✓ 배치됨</span>
-                                    <button class="btn-side-buy">구매</button>
-                                </div>
+                        </div>
+                        <div class="result-card">
+                            <span class="badge">잘 어울림</span>
+                            <div class="card-img-holder">🪑</div>
+                            <div class="card-info">
+                                <div class="card-title">패브릭 1인 체어</div>
+                                <div class="card-bottom"><span class="card-price">₩ 95,000</span><button class="btn-buy">구매하기</button></div>
                             </div>
-                            <div class="recommend-item">
-                                <div class="item-left">
-                                    <div class="item-icon">🛏️</div>
-                                    <div class="item-meta">
-                                        <h5>북유럽 침대 프레임</h5>
-                                        <span>침실 • ₩ 480,000</span>
-                                    </div>
-                                </div>
-                                <div class="item-right">
-                                    <span class="tag-status">침실 추천</span>
-                                    <span class="btn-placed">✓ 배치됨</span>
-                                    <button class="btn-side-buy">구매</button>
-                                </div>
-                            </div>
-                            <div class="recommend-item">
-                                <div class="item-left">
-                                    <div class="item-icon">🚪</div>
-                                    <div class="item-meta">
-                                        <h5>화이트 2도어 옷장</h5>
-                                        <span>침실 • ₩ 240,000</span>
-                                    </div>
-                                </div>
-                                <div class="item-right">
-                                    <span class="tag-status" style="background-color: #f7e6e1; color:#c05c46;">인기</span>
-                                    <span class="btn-placed">✓ 배치됨</span>
-                                    <button class="btn-side-buy">구매</button>
-                                </div>
+                        </div>
+                        <div class="result-card">
+                            <span class="badge">스타일 추천</span>
+                            <div class="card-img-holder">📚</div>
+                            <div class="card-info">
+                                <div class="card-title">월넛 책장</div>
+                                <div class="card-bottom"><span class="card-price">₩ 240,000</span><button class="btn-buy">구매하기</button></div>
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="side-panel">
-                        <div class="panel-header" style="margin:-20px -20px 16px -20px; border-radius:12px 12px 0 0;">
-                            ⚙️ 배치 옵션
-                        </div>
-                        <div class="opt-group">
-                            <div class="opt-title">인테리어 스타일</div>
-                            <div class="opt-tags">
-                                <span class="opt-tag-btn">모던</span>
-                                <span class="opt-tag-btn active">북유럽</span>
-                                <span class="opt-tag-btn">빈티지</span>
-                                <span class="opt-tag-btn">내추럴</span>
-                                <span class="opt-tag-btn">미니멀</span>
-                            </div>
-                        </div>
-                        <div class="opt-group">
-                            <div class="opt-title">평형 선택</div>
-                            <div class="opt-tags">
-                                <span class="opt-tag-btn">10평</span>
-                                <span class="opt-tag-btn active">20평</span>
-                                <span class="opt-tag-btn">30평</span>
-                                <span class="opt-tag-btn">40평 이상</span>
-                            </div>
-                        </div>
-                        
-                        <div class="price-summary-bar">
-                            <span class="lbl">추천 가구 합계</span>
-                            <span class="total-price">₩ 1,455,000</span>
-                        </div>
-                        
-                        <div class="side-action-buttons">
-                            <button class="btn-re-layout">🤖 AI로 다시 배치하기</button>
-                            <button class="btn-buy-all">🛒 전체 구매하기</button>
-                        </div>
-                    </div>
-                    
-                    <a href="#page-shop" class="btn-more" style="width:100%; margin-top:0;">쇼핑몰 상품 더 보기</a>
+                    <a href="#page-shop" class="btn-more">더 보기</a>
                 </div>
             </div>
         </div>
@@ -1038,9 +766,10 @@
 
     <!-- ==========================================================================
        🛒 페이지 5 — 쇼핑몰 [#page-shop]
-       ========================================================================== */
+       ========================================================================== -->
     <div id="page-shop" class="page">
         <header class="header">
+            <!-- ⚠️ 디테일 요구사항 반영: 쇼핑몰의 로고 클릭 시 AI 가구 추천 페이지(#page-ai)로 이동 -->
             <a href="#page-ai" class="logo">sol-ving</a>
             <nav class="nav-links">
                 <a href="#page-home">홈</a>

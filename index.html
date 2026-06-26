@@ -39,7 +39,7 @@
             --color-border: #e5dfd3;
         }
 
-    
+       
         .page {
             display: none;
             width: 100%;
@@ -60,7 +60,7 @@
             display: flex;
         }
 
-        
+       
         .header {
             width: 100%;
             height: 80px;
@@ -193,6 +193,7 @@
             flex-direction: column;
             gap: 16px;
             height: 220px;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
         .feature-card h3 {
             font-size: 20px;
@@ -203,6 +204,14 @@
             font-size: 15px;
             color: #888888;
             line-height: 1.5;
+        }
+        
+       
+        .features-grid a.feature-card:hover {
+            cursor: pointer;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(138, 109, 77, 0.15);
+            border: 1px solid var(--color-primary);
         }
 
        
@@ -306,7 +315,7 @@
             margin-left: 4px;
         }
 
-       
+        
         .ai-title-area {
             margin-bottom: 24px;
         }
@@ -715,6 +724,28 @@
 </head>
 <body>
 
+    <a href="#page-ai" class="feature-card">
+                    <div>
+                        <h3> 사진 업로드</h3>
+                        <p style="margin-top: 16px;">빈 공간이나 방을 사진으로 찍어서 올려요</p>
+                    </div>
+                </a>
+                
+                <div class="feature-card">
+                    <h3> AI 분석</h3>
+                    <p>AI가 공간을 분석하고 스타일을 파악해요</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3> 가구 추천</h3>
+                    <p>딱 맞는 가구를 바로 추천해드려요</p>
+                </div>
+            </div>
+        </div>
+        <footer class="footer">sol-ving ©2024 | 1인 가구를 위한 AI 가구 추천 서비스</footer>
+    </div>
+
+
     <div class="blueprint-container">
                     <div class="panel-header">
                          아파트 평면도 — 거실·주방·침실·욕실
@@ -744,7 +775,7 @@
                         <div class="room-label" style="top: 300px; left: 220px;">다용도실</div>
                         
                         <div class="furniture-element f-tv"> TV</div>
-                        <div class="furniture-element f-sofa">소파</div>
+                        <div class="furniture-element f-sofa"> 소파</div>
                         <div class="furniture-element f-table1">테이블</div>
                         <div class="furniture-element f-kitchen">조리대</div>
                         <div class="furniture-element f-dining"> 식탁</div>
@@ -850,7 +881,7 @@
                         
                         <div class="side-action-buttons">
                             <button class="btn-re-layout"> AI로 다시 배치하기</button>
-                            <button class="btn-buy-all">🛒 전체 구매하기</button>
+                            <button class="btn-buy-all"> 전체 구매하기</button>
                         </div>
                     </div>
                     
@@ -860,113 +891,3 @@
         </div>
         <footer class="footer">sol-ving ©2024 | 1인 가구를 위한 AI 가구 추천 서비스</footer>
     </div>
-
-
-    <a href="#page-ai" class="logo">sol-ving</a>
-            <nav class="nav-links">
-                <a href="#page-home">홈</a>
-                <a href="#page-ai">AI 추천</a>
-                <a href="#page-shop" style="color:var(--color-bg-dark); font-weight:700;">쇼핑몰</a>
-            </nav>
-            <div class="auth-buttons">
-                <a href="#page-login" class="btn-login">로그인</a>
-                <a href="#page-register" class="btn-register">회원가입</a>
-            </div>
-        </header>
-        
-        <div class="content-body">
-            <div class="shop-header">
-                <h2>쇼핑몰</h2>
-                <p>AI가 추천한 가구를 바로 구매해보세요</p>
-            </div>
-            <div class="shop-filter-bar">
-                <div class="filter-tabs">
-                    <button class="filter-tab active">전체</button>
-                    <button class="filter-tab">소파</button>
-                    <button class="filter-tab">테이블</button>
-                    <button class="filter-tab">의자</button>
-                    <button class="filter-tab">수납</button>
-                    <button class="filter-tab">침대</button>
-                </div>
-                <div class="search-bar">
-                    <span></span>
-                    <input type="text" placeholder="가구 검색...">
-                </div>
-            </div>
-
-            <div class="shop-grid">
-                <div class="shop-card">
-                    <span class="badge">추천</span>
-                    <div class="card-img-holder"></div>
-                    <div class="card-info">
-                        <div class="card-title">스칸디나비안 소파 3인용</div>
-                        <span class="btn-wish">♡</span>
-                        <div class="card-bottom"><span class="card-price">₩ 1,000</span><button class="btn-buy">장바구니</button></div>
-                    </div>
-                </div>
-                <div class="shop-card">
-                    <div class="card-img-holder"></div>
-                    <div class="card-info">
-                        <div class="card-title">오크 원목 다이닝 테이블</div>
-                        <span class="btn-wish">♡</span>
-                        <div class="card-bottom"><span class="card-price">₩ 1,000</span><button class="btn-buy">장바구니</button></div>
-                    </div>
-                </div>
-                <div class="shop-card">
-                    <span class="badge" style="background-color: #a48e77;">인기</span>
-                    <div class="card-img-holder"></div>
-                    <div class="card-info">
-                        <div class="card-title">패브릭 1인 암체어</div>
-                        <span class="btn-wish">♡</span>
-                        <div class="card-bottom"><span class="card-price">₩ 1,000</span><button class="btn-buy">장바구니</button></div>
-                    </div>
-                </div>
-                <div class="shop-card">
-                    <div class="card-img-holder"></div>
-                    <div class="card-info">
-                        <div class="card-title">월넛 5단 책장</div>
-                        <span class="btn-wish">♡</span>
-                        <div class="card-bottom"><span class="card-price">₩ 20,000</span><button class="btn-buy">장바구니</button></div>
-                    </div>
-                </div>
-                <div class="shop-card">
-                    <span class="badge">추천</span>
-                    <div class="card-img-holder"></div>
-                    <div class="card-info">
-                        <div class="card-title">북유럽 침대 프레임</div>
-                        <span class="btn-wish">♡</span>
-                        <div class="card-bottom"><span class="card-price">₩ 10,000</span><button class="btn-buy">장바구니</button></div>
-                    </div>
-                </div>
-                <div class="shop-card">
-                    <div class="card-img-holder"></div>
-                    <div class="card-info">
-                        <div class="card-title">라운드 커피 테이블</div>
-                        <span class="btn-wish">!</span>
-                        <div class="card-bottom"><span class="card-price">₩ 20,000</span><button class="btn-buy">장바구니</button></div>
-                    </div>
-                </div>
-                <div class="shop-card">
-                    <span class="badge" style="background-color: #a48e77;">인기</span>
-                    <div class="card-img-holder"></div>
-                    <div class="card-info">
-                        <div class="card-title">화이트 수납 서랍장</div>
-                        <span class="btn-wish">♡</span>
-                        <div class="card-bottom"><span class="card-price">₩ 65,000</span><button class="btn-buy">장바구니</button></div>
-                    </div>
-                </div>
-                <div class="shop-card">
-                    <div class="card-img-holder"></div>
-                    <div class="card-info">
-                        <div class="card-title">캔티레버 스틸 의자</div>
-                        <span class="btn-wish">!</span>
-                        <div class="card-bottom"><span class="card-price">₩ 8,000</span><button class="btn-buy">장바구니</button></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <footer class="footer">sol-ving ©2024 | 1인 가구를 위한 AI 가구 추천 서비스</footer>
-    </div>
-
-</body>
-</html>

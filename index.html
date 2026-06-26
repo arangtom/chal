@@ -5,7 +5,289 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>sol-ving | AI 가구 추천 서비스</title>
     <style>
-        /* --- CSS Reset & Variables --- */
+        /* ==========================================================================
+           🤖 페이지 4 — AI 도면 가구 배치 스타일 (추가 분)
+           ========================================================================== */
+        .ai-title-area {
+            margin-bottom: 24px;
+        }
+        .ai-title-area h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 6px;
+        }
+        .ai-title-area p {
+            color: var(--color-gray);
+            font-size: 14px;
+        }
+        
+        .ai-blueprint-layout {
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+        }
+        
+        /* 좌측 평면도 컨테이너 */
+        .blueprint-container {
+            flex: 1.1;
+            background-color: var(--color-white);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+        .panel-header {
+            background-color: var(--color-bg-dark);
+            color: var(--color-white);
+            padding: 14px 20px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .room-filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .room-btn {
+            background-color: #ede7dc;
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #444;
+            cursor: pointer;
+        }
+        .room-btn.active {
+            background-color: var(--color-primary);
+            color: var(--color-white);
+        }
+        
+        /* 아파트 도면 그래픽 캔버스 */
+        .blueprint-canvas {
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            height: 520px;
+            position: relative;
+            background-color: #faf8f5;
+            padding: 20px;
+        }
+        .ai-badge-fixed {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background-color: #a3896b;
+            color: white;
+            font-size: 12px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        
+        /* 벽면 입체 구조 배치 */
+        .wall {
+            position: absolute;
+            background-color: #3b3228;
+        }
+        .w-outer-1 { top: 40px; left: 40px; width: 360px; height: 10px; }
+        .w-outer-2 { top: 40px; left: 40px; width: 10px; height: 440px; }
+        .w-outer-3 { top: 470px; left: 40px; width: 360px; height: 10px; }
+        .w-outer-4 { top: 40px; left: 390px; width: 10px; height: 440px; }
+        .w-inner-h1 { top: 190px; left: 40px; width: 130px; height: 8px; }
+        .w-inner-h2 { top: 250px; left: 160px; width: 240px; height: 8px; }
+        .w-inner-v1 { top: 40px; left: 160px; width: 8px; height: 300px; }
+        
+        /* 도면 내부 가구 오브젝트 */
+        .furniture-element {
+            position: absolute;
+            background-color: #c4ab8e;
+            border: 1px solid #b2977a;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: #554433;
+            padding: 4px;
+            font-weight: 600;
+        }
+        .f-tv { top: 60px; left: 60px; width: 80px; height: 24px; background-color: #8c7863; color: white; }
+        .f-sofa { top: 110px; left: 60px; width: 80px; height: 45px; }
+        .f-table1 { top: 165px; left: 85px; width: 35px; height: 20px; }
+        .f-kitchen { top: 205px; left: 70px; width: 70px; height: 24px; }
+        .f-dining { top: 255px; left: 75px; width: 50px; height: 40px; }
+        .f-bed { top: 65px; left: 185px; width: 60px; height: 50px; }
+        .f-closet { top: 60px; left: 265px; width: 40px; height: 65px; background-color: #7d6854; color: white; }
+        
+        /* 룸 섹션 네임 가이드 */
+        .room-label {
+            position: absolute;
+            font-size: 12px;
+            font-weight: 700;
+            color: #888;
+        }
+        .rl-living { top: 55px; left: 145px; }
+        .rl-kitchen { top: 230px; left: 45px; }
+        
+        /* 우측 정보 패널 및 가구 목록 컨트롤러 */
+        .ai-control-side {
+            flex: 0.9;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .side-panel {
+            background-color: var(--color-white);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+        .recommend-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 290px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+        .recommend-item {
+            display: flex;
+            align-items: center;
+            background-color: #fbf9f5;
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 10px 14px;
+            justify-content: space-between;
+        }
+        .item-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .item-icon {
+            font-size: 20px;
+            background-color: #ede7dc;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+        }
+        .item-meta h5 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #111;
+        }
+        .item-meta span {
+            font-size: 11px;
+            color: var(--color-gray);
+        }
+        .item-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .tag-status {
+            font-size: 11px;
+            background-color: #f3edd8;
+            color: #a47e3c;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        .btn-placed {
+            background-color: #2e7d32;
+            color: white;
+            font-size: 12px;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        .btn-side-buy {
+            background-color: var(--color-primary);
+            color: white;
+            font-size: 12px;
+            padding: 6px 12px;
+            border-radius: 4px;
+        }
+        
+        /* 배치 하단 세부 조절 태그 */
+        .opt-group {
+            margin-top: 14px;
+        }
+        .opt-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--color-gray);
+            margin-bottom: 8px;
+        }
+        .opt-tags {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+        .opt-tag-btn {
+            background-color: #ede7dc;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #333;
+            cursor: pointer;
+        }
+        .opt-tag-btn.active {
+            background-color: var(--color-primary);
+            color: white;
+        }
+        
+        /* 하단 금액 연산 결과창 및 컨트롤 컴포넌트 */
+        .side-action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 10px;
+        }
+        .btn-re-layout {
+            flex: 1;
+            background-color: var(--color-bg-dark);
+            color: white;
+            padding: 14px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-align: center;
+            font-size: 14px;
+        }
+        .btn-buy-all {
+            flex: 1.2;
+            background-color: var(--color-primary);
+            color: white;
+            padding: 14px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-align: center;
+            font-size: 14px;
+        }
+        .price-summary-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px dashed var(--color-border);
+        }
+        .price-summary-bar .lbl {
+            font-size: 13px;
+            color: var(--color-gray);
+        }
+        .price-summary-bar .total-price {
+            font-size: 20px;
+            font-weight: 800;
+            color: #111;
+        }/* --- CSS Reset & Variables --- */
         * {
             margin: 0;
             padding: 0;
@@ -875,6 +1157,179 @@
         </div>
         <footer class="footer">sol-ving ©2024 | 1인 가구를 위한 AI 가구 추천 서비스</footer>
     </div>
-
+<!-- ==========================================================================
+       🤖 페이지 4 — AI 도면 가구 배치 페이지 [#page-ai] (신규 조감도 배치창 교체)
+       ========================================================================== */
+    <div id="page-ai" class="page">
+        <header class="header">
+            <a href="#page-home" class="logo">sol-ving</a>
+            <nav class="nav-links">
+                <a href="#page-home">홈</a>
+                <a href="#page-ai" style="color:var(--color-bg-dark); font-weight:700;">AI 추천</a>
+                <a href="#page-shop">쇼핑몰</a>
+            </nav>
+            <div class="auth-buttons">
+                <a href="#page-login" class="btn-login">로그인</a>
+                <a href="#page-register" class="btn-register">회원가입</a>
+            </div>
+        </header>
+        
+        <div class="content-body">
+            <div class="ai-title-area">
+                <h2>AI 도면 가구 배치</h2>
+                <p>방 유형을 선택하고 AI가 추천한 가구를 도면에 배치해보세요</p>
+            </div>
+            
+            <div class="ai-blueprint-layout">
+                <!-- 좌측 평면도 그래픽 인터페이스 -->
+                <div class="blueprint-container">
+                    <div class="panel-header">
+                        🏠 아파트 평면도 — 거실·주방·침실·욕실
+                    </div>
+                    <div class="room-filters">
+                        <button class="room-btn">거실</button>
+                        <button class="room-btn">침실</button>
+                        <button class="room-btn">주방</button>
+                        <button class="room-btn">욕실</button>
+                        <button class="room-btn active">전체</button>
+                    </div>
+                    
+                    <div class="blueprint-canvas">
+                        <div class="ai-badge-fixed">✨ AI 배치 완료</div>
+                        
+                        <!-- 룸 가이드 레이아웃 벽 구조 -->
+                        <div class="wall w-outer-1"></div>
+                        <div class="wall w-outer-2"></div>
+                        <div class="wall w-outer-3"></div>
+                        <div class="wall w-outer-4"></div>
+                        <div class="wall w-inner-h1"></div>
+                        <div class="wall w-inner-h2"></div>
+                        <div class="wall w-inner-v1"></div>
+                        
+                        <!-- 룸 섹션별 가이드 텍스트 -->
+                        <div class="room-label rl-living">거실</div>
+                        <div class="room-label rl-kitchen" style="top: 235px; left: 55px;">주방</div>
+                        <div class="room-label" style="top: 135px; left: 185px;">침실</div>
+                        <div class="room-label" style="top: 300px; left: 220px;">다용도실</div>
+                        
+                        <!-- 배치 가구 아이콘 요소 객체 -->
+                        <div class="furniture-element f-tv">📺 TV</div>
+                        <div class="furniture-element f-sofa">🛋️ 소파</div>
+                        <div class="furniture-element f-table1">테이블</div>
+                        <div class="furniture-element f-kitchen">조리대</div>
+                        <div class="furniture-element f-dining">🍽️ 식탁</div>
+                        <div class="furniture-element f-bed">🛏️ 침대</div>
+                        <div class="furniture-element f-closet">옷장</div>
+                        <div class="furniture-element" style="top: 275px; left: 335px; width: 35px; height: 35px; background-color: #bcd4e6;">욕조</div>
+                    </div>
+                </div>
+                
+                <!-- 우측 가구 리스트 제어 패널 -->
+                <div class="ai-control-side">
+                    <div class="side-panel">
+                        <div class="panel-header" style="margin:-20px -20px 16px -20px; border-radius:12px 12px 0 0;">
+                            📥 AI 추천 가구 목록
+                        </div>
+                        <div class="recommend-list">
+                            <div class="recommend-item">
+                                <div class="item-left">
+                                    <div class="item-icon">🛋️</div>
+                                    <div class="item-meta">
+                                        <h5>스칸디나비안 소파</h5>
+                                        <span>거실 • ₩ 320,000</span>
+                                    </div>
+                                </div>
+                                <div class="item-right">
+                                    <span class="tag-status">거실 추천</span>
+                                    <span class="btn-placed">✓ 배치됨</span>
+                                    <button class="btn-side-buy">구매</button>
+                                </div>
+                            </div>
+                            <div class="recommend-item">
+                                <div class="item-left">
+                                    <div class="item-icon">📺</div>
+                                    <div class="item-meta">
+                                        <h5>월넛 TV 장</h5>
+                                        <span>거실 • ₩ 185,000</span>
+                                    </div>
+                                </div>
+                                <div class="item-right">
+                                    <span class="tag-status">잘 어울림</span>
+                                    <span class="btn-placed">✓ 배치됨</span>
+                                    <button class="btn-side-buy">구매</button>
+                                </div>
+                            </div>
+                            <div class="recommend-item">
+                                <div class="item-left">
+                                    <div class="item-icon">🛏️</div>
+                                    <div class="item-meta">
+                                        <h5>북유럽 침대 프레임</h5>
+                                        <span>침실 • ₩ 480,000</span>
+                                    </div>
+                                </div>
+                                <div class="item-right">
+                                    <span class="tag-status">침실 추천</span>
+                                    <span class="btn-placed">✓ 배치됨</span>
+                                    <button class="btn-side-buy">구매</button>
+                                </div>
+                            </div>
+                            <div class="recommend-item">
+                                <div class="item-left">
+                                    <div class="item-icon">🚪</div>
+                                    <div class="item-meta">
+                                        <h5>화이트 2도어 옷장</h5>
+                                        <span>침실 • ₩ 240,000</span>
+                                    </div>
+                                </div>
+                                <div class="item-right">
+                                    <span class="tag-status" style="background-color: #f7e6e1; color:#c05c46;">인기</span>
+                                    <span class="btn-placed">✓ 배치됨</span>
+                                    <button class="btn-side-buy">구매</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 인테리어 스타일 / 아파트 평형 셀렉터 옵션 -->
+                    <div class="side-panel">
+                        <div class="panel-header" style="margin:-20px -20px 16px -20px; border-radius:12px 12px 0 0;">
+                            ⚙️ 배치 옵션
+                        </div>
+                        <div class="opt-group">
+                            <div class="opt-title">인테리어 스타일</div>
+                            <div class="opt-tags">
+                                <span class="opt-tag-btn">모던</span>
+                                <span class="opt-tag-btn active">북유럽</span>
+                                <span class="opt-tag-btn">빈티지</span>
+                                <span class="opt-tag-btn">내추럴</span>
+                                <span class="opt-tag-btn">미니멀</span>
+                            </div>
+                        </div>
+                        <div class="opt-group">
+                            <div class="opt-title">평형 선택</div>
+                            <div class="opt-tags">
+                                <span class="opt-tag-btn">10평</span>
+                                <span class="opt-tag-btn active">20평</span>
+                                <span class="opt-tag-btn">30평</span>
+                                <span class="opt-tag-btn">40평 이상</span>
+                            </div>
+                        </div>
+                        
+                        <!-- 연산 금액 노출 바 -->
+                        <div class="price-summary-bar">
+                            <span class="lbl">추천 가구 합계</span>
+                            <span class="total-price">₩ 1,455,000</span>
+                        </div>
+                        
+                        <div class="side-action-buttons">
+                            <button class="btn-re-layout">🤖 AI로 다시 배치하기</button>
+                            <button class="btn-buy-all">🛒 전체 구매하기</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="footer">sol-ving ©2024 | 1인 가구를 위한 AI 가구 추천 서비스</footer>
+    </div>
 </body>
 </html>
